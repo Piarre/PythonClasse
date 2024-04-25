@@ -14,8 +14,7 @@ def lint_history(expr):
     return expr
 
 def main():
-    result = 0
-    history = ""
+    history = "0"
     
     clear()
     colorama.init()
@@ -27,13 +26,11 @@ def main():
 
     while True:
         try:
-            print(colorama.Fore.YELLOW + f"History :{lint_history(history[2::])}")
-            print(colorama.Fore.BLUE + f"Actual result : {str(round(result, 2))}\n")
             currentInput = input(colorama.Fore.BLUE + "Command : ")
 
-            if currentInput == "+":
+            if currentInput in ["+", "-", "*", "/"]:
                 clear()
-                print(colorama.Fore.BLUE + "Current operation : + \n")
+                print(colorama.Fore.BLUE + f"Current operation : {currentInput} \n")
 
                 while True:
                     try:
@@ -43,62 +40,25 @@ def main():
                         print(colorama.Fore.RED + "Error number only")
 
                 clear()
-                history += f" + {str(val)}"
-                result += val
-            elif currentInput == "-":
-                clear()
-                print(colorama.Fore.BLUE + "Current operation : - \n")
-
-                while True:
-                    try:
-                        val = int(input("Value : "))
-                        break
-                    except ValueError:
-                        print(colorama.Fore.RED + "Error number only")
-
-                clear()
-                history += f" - {str(val)}"
-                result -= val
-            elif currentInput == "*":
-                clear()
-                print(colorama.Fore.BLUE + "Current operation : * \n")
-
-                while True:
-                    try:
-                        val = int(input("Value : "))
-                        break
-                    except ValueError:
-                        print(colorama.Fore.RED + "Error number only")
-
-                clear()
-                history += f" * {str(val)}"
-                result *= val
-            elif currentInput == "/":
-                clear()
-                print(colorama.Fore.BLUE + "Current operation : / \n")
-
-                while True:
-                    try:
-                        val = int(input("Value : "))
-                        break
-                    except ValueError:
-                        print(colorama.Fore.RED + "Error number only")
-
-                clear()
-                history += f" / {str(val)}"
-                result /= val
+                history += f" {currentInput} {str(val)}"
             elif currentInput == "quit":
                 clear()
                 break
             elif currentInput == "reset":
-                result = 0
+                history = "0"
                 clear()
                 print(colorama.Fore.BLUE + "Result reset to 0")
             else:
                 clear()
                 print(colorama.Fore.RED + "Unknown command")
 
+            result = eval(history)
+            
             title()
+
+            print(colorama.Fore.YELLOW + f"History :{lint_history(history[2::])}")
+            print(colorama.Fore.BLUE + f"Actual result : {str(round(result, 2))}\n")
+
 
         except ValueError:
             clear()
